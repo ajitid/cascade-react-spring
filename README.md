@@ -14,6 +14,6 @@ Production build can be done using `npm run build`. Build files will be created 
 
 ## Other commands
 
-`npm run lint` – Lints code using ESLint
-`npm run format` – Formats code using Prettier
-`npm run analyze` – Shows bundle (production build) size breakdown
+- `npm run lint` – Lints code using ESLint
+- `npm run format` – Formats code using Prettier
+- `npm run analyze` – Shows bundle (production build) size breakdown
