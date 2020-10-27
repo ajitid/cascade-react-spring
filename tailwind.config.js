@@ -14,7 +14,7 @@ module.exports = {
     screens,
     extend: {
       fontFamily: {
-        sans: ['Titillium Web', ...defaultTheme.fontFamily.sans],
+        sans: ['Manrope', ...defaultTheme.fontFamily.sans],
       },
     },
   },
