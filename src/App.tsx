@@ -10,68 +10,6 @@ import { Children, Cascade, Item, ItemContext } from 'elements/Cascade/Cascade';
 import { WC } from 'shared/types';
 
 function App() {
-  const [containerRef, { height }] = useMeasure();
-  const containerStyle = useSpring({ height });
-
-  const [action, setAction] = useState<'shift' | 'push'>('push');
-  const [current, setCurrent] = useState(() => nanoid());
-  const shift = () => {
-    setAction('shift');
-
-    const id = nanoid();
-    setCurrent(id);
-  };
-  const push = () => {
-    setAction('push');
-
-    const id = nanoid();
-    setCurrent(id);
-  };
-
-  const WIDTH = 80;
-
-  const [immediate, setImmediate] = useState(true);
-  useEffect(() => {
-    setImmediate(false);
-  }, []);
-
-  const transition = useTransition(current, {
-    from: {
-      x: action === 'shift' ? (-1 * WIDTH) / 4 : WIDTH,
-    },
-    enter: {
-      x: 0,
-    },
-    leave: {
-      x: action === 'shift' ? WIDTH : (-1 * WIDTH) / 4,
-    },
-    immediate,
-    // config: {
-    //   damping: 1,
-    //   frequency: 4,
-    // },
-  });
-
-  const fragment = transition((style, item) => {
-    const arrivingId = current;
-    const isCurrentArriving = arrivingId === item;
-
-    return (
-      <a.div
-        key={item}
-        ref={arrivingId === item ? containerRef : () => {}}
-        className="absolute top-0 left-0 bg-gray-300"
-        style={{
-          ...style,
-          width: WIDTH,
-          zIndex: !isCurrentArriving && action === 'shift' ? 10 : 0,
-        }}
-      >
-        {item}
-      </a.div>
-    );
-  });
-
   return (
     <div className="min-h-screen font-sans antialiased text-gray-900 break-words">
       <Seo title="Home" />
@@ -89,41 +27,32 @@ function App() {
           :
         </p>
 
-        <button onClick={shift}>shift</button>
-        <button onClick={push}>push</button>
+        <Cascade>
+          <SastaButton>A</SastaButton>
 
-        <a.div
-          style={{ ...containerStyle, width: WIDTH }}
-          className="relative overflow-hidden bg-gray-300"
-        >
-          {fragment}
-        </a.div>
+          <Item label="B">
+            <SastaButton>B</SastaButton>
+
+            <Children>
+              <SastaButton>B.A</SastaButton>
+              <SastaButton>B.B</SastaButton>
+
+              <Item label="B.C">
+                <SastaButton>B.C</SastaButton>
+
+                <Children>
+                  <SastaButton>B.C.A</SastaButton>
+                  <SastaButton>B.C.B</SastaButton>
+                </Children>
+              </Item>
+
+              <SastaButton>B.D</SastaButton>
+            </Children>
+          </Item>
+
+          <SastaButton>C</SastaButton>
+        </Cascade>
       </div>
-
-      <Cascade>
-        <SastaButton>A</SastaButton>
-
-        <Item label="B">
-          <SastaButton>B</SastaButton>
-
-          <Children>
-            <SastaButton>B.A</SastaButton>
-            <SastaButton>B.B</SastaButton>
-            <Item label="🤜 B.C">
-              <SastaButton>B.C</SastaButton>
-
-              <Children>
-                <SastaButton>B.C.A</SastaButton>
-                <SastaButton>B.C.B</SastaButton>
-              </Children>
-            </Item>
-            <SastaButton>B.D</SastaButton>
-          </Children>
-        </Item>
-
-        <SastaButton>C</SastaButton>
-        <SastaButton>D</SastaButton>
-      </Cascade>
     </div>
   );
 }
