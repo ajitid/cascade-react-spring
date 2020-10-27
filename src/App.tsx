@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTransition, a, useSpring } from 'react-spring';
 import useMeasure from 'react-use-measure';
 import { nanoid } from 'nanoid';
@@ -26,7 +26,12 @@ function App() {
     setCurrent(id);
   };
 
-  const WIDTH = 304;
+  const WIDTH = 80;
+
+  const [immediate, setImmediate] = useState(true);
+  useEffect(() => {
+    setImmediate(false);
+  }, []);
 
   const transition = useTransition(current, {
     from: {
@@ -38,6 +43,11 @@ function App() {
     leave: {
       x: action === 'shift' ? WIDTH : (-1 * WIDTH) / 4,
     },
+    immediate,
+    // config: {
+    //   damping: 1,
+    //   frequency: 4,
+    // },
   });
 
   const fragment = transition((style, item) => {
@@ -48,7 +58,7 @@ function App() {
       <a.div
         key={item}
         ref={arrivingId === item ? containerRef : () => {}}
-        className="h-8 absolute top-0 left-0 bg-gray-300"
+        className="absolute top-0 left-0 bg-gray-300"
         style={{
           ...style,
           width: WIDTH,
@@ -61,7 +71,7 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen font-sans antialiased text-gray-900">
+    <div className="min-h-screen font-sans antialiased text-gray-900 break-words">
       <Seo title="Home" />
       <div className="container mx-auto">
         <p>
