@@ -1,4 +1,5 @@
 import React, { FC, useContext, useRef } from 'react';
+import { ChevronLeft as ChevronLeftIcon } from 'react-feather';
 
 import 'styles/tailwind.css';
 
@@ -78,24 +79,12 @@ const Back: FC<BackProps> = ({ goBack, parentLabel }) => {
   return (
     <button
       onClick={goBack}
-      className="text-sm block w-full py-1 px-2 text-left focus:outline-none active:bg-green-300 transition-colors duration-150"
+      className="flex items-center text-sm bg-green-300 w-full py-1 px-2 text-left focus:outline-none active:bg-green-300 transition-colors duration-150"
     >
-      Back to {parentLabelRef.current}
+      <ChevronLeftIcon size={16} className="inline-block -ml-1 mr-1" />
+      <span>Back to {parentLabelRef.current}</span>
     </button>
   );
 };
 
 export default App;
-
-/*
-<Cascade>
-  <Cascade.Item>
-      <Cascade.Children>
-        <Cascase.Item>
-          <div><Icon /> Name</div>
-        </Cascase.Item>
-      </Cascade.Children>
-  </Cascade.Item>
-</Cascade>
-
-*/
