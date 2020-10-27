@@ -1,0 +1,9 @@
+/*! debug.css | MIT License | zaydek.github.com/debug.css */
+
+/* Creates visual boundaries around element to help in styling */
+*:not(path):not(g) {
+  color: hsla(210, 100%, 100%, 0.9) !important;
+  background: hsla(152, 74%, 28%, 0.5) !important;
+  outline: solid 0.25rem hsla(210, 100%, 100%, 0.5) !important;
+  box-shadow: none !important;
+}
