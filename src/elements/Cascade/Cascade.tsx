@@ -79,7 +79,7 @@ export const Cascade: FC<WC> = ({ children }) => {
   const [containerRef, { height }] = useMeasure();
   const containerStyle = useSpring({ height });
 
-  const WIDTH = 80;
+  const WIDTH = 120;
 
   const [immediate, setImmediate] = useState(true);
   useEffect(() => {
@@ -117,6 +117,11 @@ export const Cascade: FC<WC> = ({ children }) => {
           zIndex: !isCurrentArriving && action === 'pop' ? 10 : 0,
         }}
       >
+        {stack[0].content !== item.content && (
+          <button onClick={pop} className="block text-sm text-left">
+            Go back to {stack[stack.length - 1].parentLabel}
+          </button>
+        )}
         {item.content}
       </a.div>
     );
@@ -126,10 +131,6 @@ export const Cascade: FC<WC> = ({ children }) => {
     <CascadeContext.Provider value={{ push, pop }}>
       {stack.length > 0 && (
         <>
-          <button onClick={pop} className="block">
-            ◀ {stack[stack.length - 1].parentLabel}
-          </button>
-
           <a.div
             style={{ ...containerStyle, width: WIDTH }}
             className="relative overflow-hidden bg-gray-300"
