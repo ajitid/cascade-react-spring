@@ -57,16 +57,28 @@ export interface BackProps {
   className?: string;
 }
 
-export const Back: FC<BackProps> = ({ parentLabel, goBack, style, className }) => {
+interface BackWrapperProps extends BackProps {
+  Back?: FC<BackProps>;
+}
+
+export const BackWrapper: FC<BackWrapperProps> = ({
+  parentLabel,
+  goBack,
+  style,
+  className,
+  Back,
+}) => {
   // We have to do this as parentLabel gets immediately switched when
   // we move from one list to the next
   const parentLabelRef = useRef(parentLabel);
+
+  if (Back != null) return <Back {...{ parentLabel: parentLabelRef.current, goBack }} />;
 
   return (
     <button
       onClick={goBack}
       style={style}
-      className={cn([className, 'block text-sm text-left w-full outline-black'])}
+      className={cn([className, 'block text-sm text-left w-full focus:outline-black'])}
     >
       Go back to {parentLabelRef.current}
     </button>
@@ -79,16 +91,8 @@ export const Cascade: FC<WC<{
   itemStyle?: CSSProperties;
   itemClassName?: string;
   width?: number;
-  BackEl?: FC<BackProps>;
-}>> = ({
-  children,
-  width = 80,
-  BackEl = Back,
-  style,
-  className,
-  itemStyle,
-  itemClassName,
-}) => {
+  Back?: FC<BackProps>;
+}>> = ({ children, width = 80, Back, style, className, itemStyle, itemClassName }) => {
   const [action, setAction] = useState<'pop' | 'push'>('push');
 
   const [stack, setStack] = useState<
@@ -166,7 +170,11 @@ export const Cascade: FC<WC<{
         }}
       >
         {stack[0].content !== item.content && (
-          <BackEl parentLabel={stack[stack.length - 1].parentLabel} goBack={pop} />
+          <BackWrapper
+            Back={Back}
+            parentLabel={stack[stack.length - 1].parentLabel}
+            goBack={pop}
+          />
         )}
         {item.content}
       </a.div>

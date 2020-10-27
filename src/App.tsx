@@ -28,7 +28,7 @@ function App() {
           width={140}
           className="bg-green-200 shadow rounded"
           itemClassName="bg-green-200"
-          BackEl={Back}
+          Back={Back}
         >
           <SastaButton>A</SastaButton>
 
