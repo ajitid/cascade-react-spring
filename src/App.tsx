@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useTransition, a, useSpring } from 'react-spring';
 import useMeasure from 'react-use-measure';
 import { nanoid } from 'nanoid';
@@ -6,6 +6,8 @@ import { nanoid } from 'nanoid';
 import 'styles/tailwind.css';
 
 import Seo from 'elements/Seo';
+import { Children, Cascade, Item, ItemContext } from 'elements/Cascade/Cascade';
+import { WC } from 'shared/types';
 
 function App() {
   const [containerRef, { height }] = useMeasure();
@@ -97,9 +99,44 @@ function App() {
           {fragment}
         </a.div>
       </div>
+
+      <Cascade>
+        <SastaButton>A</SastaButton>
+
+        <Item label="B">
+          <SastaButton>B</SastaButton>
+
+          <Children>
+            <SastaButton>B.A</SastaButton>
+            <SastaButton>B.B</SastaButton>
+            <Item label="🤜 B.C">
+              <SastaButton>B.C</SastaButton>
+
+              <Children>
+                <SastaButton>B.C.A</SastaButton>
+                <SastaButton>B.C.B</SastaButton>
+              </Children>
+            </Item>
+            <SastaButton>B.D</SastaButton>
+          </Children>
+        </Item>
+
+        <SastaButton>C</SastaButton>
+        <SastaButton>D</SastaButton>
+      </Cascade>
     </div>
   );
 }
+
+const SastaButton: FC<WC> = ({ children }) => {
+  const { gotoChildren } = useContext(ItemContext);
+
+  return (
+    <button onClick={gotoChildren} className="block">
+      {children}
+    </button>
+  );
+};
 
 export default App;
 
