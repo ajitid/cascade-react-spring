@@ -148,10 +148,6 @@ export const Cascade: FC<WC<{
       x: action === 'pop' ? WIDTH : (-1 * WIDTH) / 3,
     },
     immediate,
-    // config: {
-    //   damping: 1,
-    //   frequency: 4,
-    // },
   });
 
   const fragment = transition((animStyle, item) => {

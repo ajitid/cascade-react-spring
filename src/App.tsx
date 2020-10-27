@@ -74,15 +74,13 @@ const SastaButton: FC<WC> = ({ children }) => {
 };
 
 const Back: FC<BackProps> = ({ goBack, parentLabel }) => {
-  const parentLabelRef = useRef(parentLabel);
-
   return (
     <button
       onClick={goBack}
       className="flex items-center text-sm bg-green-300 w-full py-1 px-2 text-left focus:outline-none active:bg-green-300 transition-colors duration-150"
     >
       <ChevronLeftIcon size={16} className="inline-block -ml-1 mr-1" />
-      <span>Back to {parentLabelRef.current}</span>
+      <span>Back to {parentLabel}</span>
     </button>
   );
 };
