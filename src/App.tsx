@@ -12,33 +12,23 @@ function App() {
   const containerStyle = useSpring({ height });
 
   const [action, setAction] = useState<'shift' | 'push'>('push');
-  const [arr, setArr] = useState(() => [nanoid()]);
+  const [current, setCurrent] = useState(() => nanoid());
   const shift = () => {
     setAction('shift');
 
     const id = nanoid();
-    setArr(prevArr => {
-      const arr = [...prevArr];
-
-      arr.splice(0, 1, id);
-      return arr;
-    });
+    setCurrent(id);
   };
   const push = () => {
     setAction('push');
 
     const id = nanoid();
-    setArr(prevArr => {
-      const arr = [...prevArr];
-
-      arr.splice(0, 1, id);
-      return arr;
-    });
+    setCurrent(id);
   };
 
   const WIDTH = 304;
 
-  const transition = useTransition(arr, {
+  const transition = useTransition(current, {
     from: {
       x: action === 'shift' ? (-1 * WIDTH) / 4 : WIDTH,
     },
@@ -51,7 +41,7 @@ function App() {
   });
 
   const fragment = transition((style, item) => {
-    const arrivingId = arr[0];
+    const arrivingId = current;
     const isCurrentArriving = arrivingId === item;
 
     return (
