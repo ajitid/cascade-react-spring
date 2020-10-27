@@ -80,7 +80,10 @@ export const BackWrapper: FC<BackWrapperProps> = ({
       style={style}
       className={cn([className, 'block text-sm text-left w-full focus:outline-black'])}
     >
-      Go back to {parentLabelRef.current}
+      <span role="img" aria-label="Go back">
+        ◀
+      </span>{' '}
+      {parentLabelRef.current}
     </button>
   );
 };
