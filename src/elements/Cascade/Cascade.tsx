@@ -1,6 +1,15 @@
-import React, { ReactNode, useEffect, useState, createContext, useContext } from 'react';
+import React, {
+  ReactNode,
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useRef,
+  CSSProperties,
+} from 'react';
 import { useTransition, a, useSpring } from 'react-spring';
 import useMeasure from 'react-use-measure';
+import cn from 'clsx';
 
 import { FC, WC } from 'shared/types';
 
@@ -41,7 +50,45 @@ export const Children: FC<WC> = ({ children }) => {
   return <>{children}</>;
 };
 
-export const Cascade: FC<WC> = ({ children }) => {
+export interface BackProps {
+  parentLabel: string;
+  goBack: () => void;
+  style?: CSSProperties;
+  className?: string;
+}
+
+export const Back: FC<BackProps> = ({ parentLabel, goBack, style, className }) => {
+  // We have to do this as parentLabel gets immediately switched when
+  // we move from one list to the next
+  const parentLabelRef = useRef(parentLabel);
+
+  return (
+    <button
+      onClick={goBack}
+      style={style}
+      className={cn([className, 'block text-sm text-left w-full outline-black'])}
+    >
+      Go back to {parentLabelRef.current}
+    </button>
+  );
+};
+
+export const Cascade: FC<WC<{
+  style?: CSSProperties;
+  className?: string;
+  itemStyle?: CSSProperties;
+  itemClassName?: string;
+  width?: number;
+  BackEl?: FC<BackProps>;
+}>> = ({
+  children,
+  width = 80,
+  BackEl = Back,
+  style,
+  className,
+  itemStyle,
+  itemClassName,
+}) => {
   const [action, setAction] = useState<'pop' | 'push'>('push');
 
   const [stack, setStack] = useState<
@@ -64,7 +111,7 @@ export const Cascade: FC<WC> = ({ children }) => {
   };
 
   const pop = () => {
-    if (stack.length === 1) return;
+    if (stack.length <= 1) return;
 
     setAction('pop');
 
@@ -79,7 +126,7 @@ export const Cascade: FC<WC> = ({ children }) => {
   const [containerRef, { height }] = useMeasure();
   const containerStyle = useSpring({ height });
 
-  const WIDTH = 120;
+  const WIDTH = width;
 
   const [immediate, setImmediate] = useState(true);
   useEffect(() => {
@@ -103,24 +150,23 @@ export const Cascade: FC<WC> = ({ children }) => {
     // },
   });
 
-  const fragment = transition((style, item) => {
+  const fragment = transition((animStyle, item) => {
     const arrivingId = current;
     const isCurrentArriving = arrivingId === item;
 
     return (
       <a.div
         ref={isCurrentArriving ? containerRef : () => {}}
-        className="absolute top-0 left-0 bg-gray-300"
+        className={cn(itemClassName, ['absolute top-0 left-0'])}
         style={{
-          ...style,
+          ...itemStyle,
+          ...animStyle,
           width: WIDTH,
           zIndex: !isCurrentArriving && action === 'pop' ? 10 : 0,
         }}
       >
         {stack[0].content !== item.content && (
-          <button onClick={pop} className="block text-sm text-left">
-            Go back to {stack[stack.length - 1].parentLabel}
-          </button>
+          <BackEl parentLabel={stack[stack.length - 1].parentLabel} goBack={pop} />
         )}
         {item.content}
       </a.div>
@@ -132,8 +178,8 @@ export const Cascade: FC<WC> = ({ children }) => {
       {stack.length > 0 && (
         <>
           <a.div
-            style={{ ...containerStyle, width: WIDTH }}
-            className="relative overflow-hidden bg-gray-300"
+            style={{ ...style, ...containerStyle, width: WIDTH }}
+            className={cn(className, 'relative overflow-hidden')}
           >
             {fragment}
           </a.div>

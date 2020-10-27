@@ -1,33 +1,35 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import { useTransition, a, useSpring } from 'react-spring';
-import useMeasure from 'react-use-measure';
-import { nanoid } from 'nanoid';
+import React, { FC, useContext, useRef } from 'react';
 
 import 'styles/tailwind.css';
 
 import Seo from 'elements/Seo';
-import { Children, Cascade, Item, ItemContext } from 'elements/Cascade/Cascade';
+import { Children, Cascade, Item, ItemContext, BackProps } from 'elements/Cascade/Cascade';
 import { WC } from 'shared/types';
 
 function App() {
   return (
-    <div className="min-h-screen font-sans antialiased text-gray-900 break-words">
+    <div className="min-h-screen font-sans antialiased text-gray-800 break-words bg-green-500">
       <Seo title="Home" />
       <div className="container mx-auto">
-        <p>
+        <p className="font-bold py-4">
           Making a web version of{' '}
           <a
             href="https://twitter.com/saketme/status/1314834865469222917"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-700"
+            className="text-green-900 underline focus:outline-black"
           >
             Saket's Cascade
           </a>
           :
         </p>
 
-        <Cascade>
+        <Cascade
+          width={140}
+          className="bg-green-200 shadow rounded"
+          itemClassName="bg-green-200"
+          BackEl={Back}
+        >
           <SastaButton>A</SastaButton>
 
           <Item label="B">
@@ -61,8 +63,24 @@ const SastaButton: FC<WC> = ({ children }) => {
   const { gotoChildren } = useContext(ItemContext);
 
   return (
-    <button onClick={gotoChildren} className="block">
+    <button
+      onClick={gotoChildren}
+      className="block px-2 py-1 w-full text-left focus:outline-none focus:bg-green-300"
+    >
       {children}
+    </button>
+  );
+};
+
+const Back: FC<BackProps> = ({ goBack, parentLabel }) => {
+  const parentLabelRef = useRef(parentLabel);
+
+  return (
+    <button
+      onClick={goBack}
+      className="text-sm block w-full py-1 px-2 text-left focus:outline-none focus:bg-green-300"
+    >
+      Back to {parentLabelRef.current}
     </button>
   );
 };
