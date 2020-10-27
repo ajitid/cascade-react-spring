@@ -139,13 +139,13 @@ export const Cascade: FC<WC<{
 
   const transition = useTransition(current, {
     from: {
-      x: action === 'pop' ? (-1 * WIDTH) / 4 : WIDTH,
+      x: action === 'pop' ? (-1 * WIDTH) / 3 : WIDTH,
     },
     enter: {
       x: 0,
     },
     leave: {
-      x: action === 'pop' ? WIDTH : (-1 * WIDTH) / 4,
+      x: action === 'pop' ? WIDTH : (-1 * WIDTH) / 3,
     },
     immediate,
     // config: {

@@ -65,7 +65,7 @@ const SastaButton: FC<WC> = ({ children }) => {
   return (
     <button
       onClick={gotoChildren}
-      className="block px-2 py-1 w-full text-left focus:outline-none focus:bg-green-300"
+      className="block px-2 py-1 w-full text-left focus:outline-none active:bg-green-300 transition-colors duration-150"
     >
       {children}
     </button>
@@ -78,7 +78,7 @@ const Back: FC<BackProps> = ({ goBack, parentLabel }) => {
   return (
     <button
       onClick={goBack}
-      className="text-sm block w-full py-1 px-2 text-left focus:outline-none focus:bg-green-300"
+      className="text-sm block w-full py-1 px-2 text-left focus:outline-none active:bg-green-300 transition-colors duration-150"
     >
       Back to {parentLabelRef.current}
     </button>
