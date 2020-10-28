@@ -32,8 +32,8 @@ export const ItemContext = createContext<ItemContextShape>({
 });
 
 export const Item: FC<WC<{ label: string }>> = ({ children, label }) => {
-  const cascadeChildren = React.Children.toArray(children).filter(
-    node => node.type === Children
+  const cascadeChildren = React.Children.toArray(children).filter(node =>
+    React.isValidElement(node) ? node.type === Children : false
   );
 
   const { push } = useContext(CascadeContext);
@@ -41,7 +41,9 @@ export const Item: FC<WC<{ label: string }>> = ({ children, label }) => {
     push(label, cascadeChildren);
   };
 
-  const item = React.Children.toArray(children).filter(node => node.type !== Children);
+  const item = React.Children.toArray(children).filter(node =>
+    React.isValidElement(node) ? node.type !== Children : false
+  );
 
   return <ItemContext.Provider value={{ gotoChildren }}>{item}</ItemContext.Provider>;
 };
@@ -165,6 +167,7 @@ export const Cascade: FC<WC<{
           ...itemStyle,
           ...animStyle,
           width: WIDTH,
+          // @ts-expect-error causing because of react-spring style prop type mismatch
           zIndex: !isCurrentArriving && action === 'pop' ? 10 : 0,
         }}
       >
@@ -185,6 +188,7 @@ export const Cascade: FC<WC<{
       {stack.length > 0 && (
         <>
           <a.div
+            // @ts-expect-error causing because of react-spring style prop type mismatch
             style={{ ...style, ...containerStyle, width: WIDTH }}
             className={cn(className, 'relative overflow-hidden')}
           >

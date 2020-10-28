@@ -1,4 +1,4 @@
-import React, { FC, useContext, useRef } from 'react';
+import React, { FC, useContext } from 'react';
 import { ChevronLeft as ChevronLeftIcon } from 'react-feather';
 
 import 'styles/tailwind.css';
