@@ -31,36 +31,36 @@ function App() {
           itemClassName="bg-green-200"
           Back={Back}
         >
-          <SastaButton>A</SastaButton>
+          <ListItemButton>A</ListItemButton>
 
           <Item label="B">
-            <SastaButton>B</SastaButton>
+            <ListItemButton>B</ListItemButton>
 
             <Children>
-              <SastaButton>B.A</SastaButton>
-              <SastaButton>B.B</SastaButton>
+              <ListItemButton>B.A</ListItemButton>
+              <ListItemButton>B.B</ListItemButton>
 
               <Item label="B.C">
-                <SastaButton>B.C</SastaButton>
+                <ListItemButton>B.C</ListItemButton>
 
                 <Children>
-                  <SastaButton>B.C.A</SastaButton>
-                  <SastaButton>B.C.B</SastaButton>
+                  <ListItemButton>B.C.A</ListItemButton>
+                  <ListItemButton>B.C.B</ListItemButton>
                 </Children>
               </Item>
 
-              <SastaButton>B.D</SastaButton>
+              <ListItemButton>B.D</ListItemButton>
             </Children>
           </Item>
 
-          <SastaButton>C</SastaButton>
+          <ListItemButton>C</ListItemButton>
         </Cascade>
       </div>
     </div>
   );
 }
 
-const SastaButton: FC<WC> = ({ children }) => {
+const ListItemButton: FC<WC> = ({ children }) => {
   const { gotoChildren } = useContext(ItemContext);
 
   return (
