@@ -3,9 +3,9 @@ import { ChevronLeft as ChevronLeftIcon } from 'react-feather';
 
 import 'styles/tailwind.css';
 
+import { WC } from 'shared/types';
 import Seo from 'elements/Seo';
 import { Children, Cascade, Item, ItemContext, BackProps } from 'elements/Cascade/Cascade';
-import { WC } from 'shared/types';
 
 function App() {
   return (
@@ -31,7 +31,14 @@ function App() {
           itemClassName="bg-green-200"
           Back={Back}
         >
-          <ListItemButton>A</ListItemButton>
+          <Item label="A">
+            <ListItemButton>A</ListItemButton>
+
+            <Children>
+              <ListItemButton>A.A</ListItemButton>
+              <ListItemButton>A.B</ListItemButton>
+            </Children>
+          </Item>
 
           <Item label="B">
             <ListItemButton>B</ListItemButton>
