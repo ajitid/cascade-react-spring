@@ -1,4 +1,8 @@
-# Anim
+# Cascade in React
+
+It basically lets you do this:
+
+<img src="./docs/cascade.gif" alt="Cascade in action" width="400">
 
 ## Install
 

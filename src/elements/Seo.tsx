@@ -10,7 +10,7 @@ interface SeoProps {
  */
 const Seo: React.FC<SeoProps> = ({ title }) => {
   useEffect(() => {
-    document.title = title ? `${title} | Anim` : 'Anim';
+    document.title = title ? `${title} | Cascade` : 'Cascade';
   }, [title]);
 
   return null;
