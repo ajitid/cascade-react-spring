@@ -4,9 +4,11 @@ It basically lets you do this:
 
 <img src="./docs/cascade.gif" alt="Cascade in action" width="400">
 
+This is an application and not a library. You can extract the code for yourself if you want to.
+
 ## Install
 
-This project uses `npm` to install its dependencies. Use `npm i` in terminal/command line to install them.
+This project uses `npm` to install its dependencies. Use `npm ci` in terminal/command line to install them.
 
 ## Develop
 

@@ -2,6 +2,7 @@
   "name": "cascade",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "start:cra": "react-scripts start",
     "start:tw": "postcss ./src/styles/tailwind-for-postcss.css -o ./src/styles/tailwind.css -w",
