@@ -167,7 +167,6 @@ export const Cascade: FC<WC<{
           ...itemStyle,
           ...animStyle,
           width: WIDTH,
-          // @ts-expect-error causing because of react-spring style prop type mismatch
           zIndex: !isCurrentArriving && action === 'pop' ? 10 : 0,
         }}
       >
@@ -188,7 +187,6 @@ export const Cascade: FC<WC<{
       {stack.length > 0 && (
         <>
           <a.div
-            // @ts-expect-error causing because of react-spring style prop type mismatch
             style={{ ...style, ...containerStyle, width: WIDTH }}
             className={cn(className, 'relative overflow-hidden')}
           >
